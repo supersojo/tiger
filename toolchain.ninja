@@ -1,0 +1,31 @@
+#
+# rules used to compile link 
+#
+rule cc
+    command = D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64/cl.exe /c @$out.rsp
+    description = cc $in
+    rspfile = $out.rsp
+    rspfile_content = $c_flags $c_definations $c_includes $in /Fo$out_dir
+
+rule link
+    command = D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64/link.exe /subsystem:console @$out.rsp
+    description = link $in
+    rspfile = $out.rsp
+    rspfile_content = $ld_flags $in $ld_library /out:$out
+
+rule flex
+     command = bin/win_flex.exe $flex_flags $in
+     description = flex $in
+
+rule bison
+     command = bin/win_bison.exe $bison_flags $in
+     description = bison $in
+     
+rule asm
+     command = D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64/ml64.exe /Fo$out_dir $asm_flags $in 
+     description = ml64 $in
+
+rule genasm
+     command = ./tiger.exe
+     description = genasm
+    

@@ -1,0 +1,40 @@
+#
+# main ninja file used by ninja
+#
+
+flex_flags = --nounistd -o src/lex.yy.c
+bison_flags = -d -o src/tiger.tab.c
+ld_flags = /LIBPATH:"./lib"
+c_flags = /DNDEBUG /I"./" /I"./src"
+asm_flags = /c
+ld_library = libfl.lib
+out_dir = obj/
+
+
+
+
+build src/tiger.tab.c: bison tiger.yy
+
+build src/lex.yy.c: flex tiger.lex
+
+build obj/lex.yy.obj: cc src/lex.yy.c
+
+build obj/tiger.tab.obj: cc src/tiger.tab.c
+
+build obj/main.obj: cc src/main.c
+
+build obj/interpreter.obj: cc src/interpreter.c
+
+build obj/symbol.obj: cc src/symbol.c
+
+build tiger.exe: link obj/tiger.tab.obj obj/lex.yy.obj obj/symbol.obj obj/interpreter.obj obj/main.obj
+
+build src/t.asm: genasm test.tiger tiger.exe
+
+build obj/t.obj:asm src/t.asm
+
+build obj/lib.obj: cc src/lib.c
+
+build t.exe:link obj/t.obj obj/lib.obj
+
+

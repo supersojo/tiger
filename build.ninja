@@ -1,0 +1,14 @@
+#
+# main ninja file used by ninja
+#
+include toolchain.ninja
+
+subninja tiger.ninja
+
+build tiger: phony tiger.exe
+
+build t: phony t.exe
+
+default tiger t
+
+
